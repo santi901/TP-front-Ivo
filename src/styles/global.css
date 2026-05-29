@@ -1,0 +1,934 @@
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface-2: #222633;
+  --border: #2a2e3a;
+  --text: #e6e8ee;
+  --muted: #9aa1b1;
+  --accent: #6d8cff;
+  --accent-strong: #4f6ef0;
+  --danger: #ff6d7a;
+  --success: #5fd0a8;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin: 0 0 0.25rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.narrow {
+  max-width: 420px;
+}
+
+/* ---------------- Header / Nav ---------------- */
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-links a {
+  color: var(--muted);
+}
+
+.nav-links a:hover {
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* ---------------- Botones ---------------- */
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius);
+  transition: filter 0.15s, background 0.15s;
+}
+
+.btn:hover {
+  filter: brightness(1.15);
+}
+
+.btn-primary {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #fff;
+}
+
+.btn-ghost {
+  background: transparent;
+}
+
+.btn-danger {
+  color: var(--danger);
+  border-color: transparent;
+  background: transparent;
+}
+
+.btn-sm {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------------- Formularios ---------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.field label {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.input,
+.field input,
+.field select {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius);
+  font: inherit;
+  width: 100%;
+}
+
+.input:focus,
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.form-error {
+  color: var(--danger);
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
+
+/* ---------------- Cards / paneles ---------------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+/* ---------------- Stats ---------------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+}
+
+.stat .value {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.stat .label {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ---------------- Lista de hábitos ---------------- */
+
+.habit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.habit-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+}
+
+.hc-head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.habit-icon {
+  font-size: 1.5rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  background: var(--surface-2);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.hc-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.habit-name {
+  font-weight: 600;
+}
+
+.habit-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0.1rem 0 0;
+}
+
+.hc-right {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.streak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffb454;
+  white-space: nowrap;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.95rem;
+  line-height: 1;
+  padding: 0.2rem;
+  opacity: 0.65;
+  transition: opacity 0.15s;
+}
+
+.icon-btn:hover {
+  opacity: 1;
+}
+
+/* Fila de días de la semana (L M M J V S D) */
+.hc-week {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.25rem;
+}
+
+.hc-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.hc-day-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.day-mark {
+  width: 2.1rem;
+  height: 2.1rem;
+  max-width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface-2);
+  color: transparent;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  transition: all 0.15s;
+}
+
+.day-mark.on {
+  background: var(--success);
+  border-color: var(--success);
+  color: #0f1117;
+}
+
+.day-mark.today:not(.on) {
+  border-color: var(--accent);
+}
+
+.day-mark:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.day-mark:not(:disabled):hover {
+  filter: brightness(1.15);
+}
+
+/* ---------------- Modal ---------------- */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  z-index: 50;
+}
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* Selector de íconos / colores */
+.picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.picker button {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: var(--surface-2);
+  font-size: 1.1rem;
+  display: grid;
+  place-items: center;
+}
+
+.picker button.selected {
+  border-color: var(--text);
+}
+
+.swatch {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+
+.swatch.selected {
+  border-color: var(--text);
+}
+
+/* ---------------- Layout helpers ---------------- */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.between {
+  justify-content: space-between;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  padding: 2.5rem 1rem;
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 540px;
+  margin: 1rem auto 2rem;
+}
+
+.cta-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Hero a dos columnas con preview */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  padding: 3rem 0 1rem;
+}
+
+.hero-text h1 {
+  font-size: 2.3rem;
+  line-height: 1.15;
+}
+
+.hero-text p {
+  color: var(--muted);
+  margin: 1rem 0 1.75rem;
+}
+
+.hero-preview {
+  perspective: 1200px;
+}
+
+.preview-window {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0.85rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Las tarjetas dentro del panel se levantan un poco sobre el fondo oscuro */
+.preview-window .habit-card {
+  background: var(--surface);
+}
+
+.preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.preview-bar span[class^='dot-'] {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-r { background: #ff6058; }
+.dot-y { background: #ffbd2e; }
+.dot-g { background: #28c93f; }
+
+.hh-empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 1.5rem 1rem;
+}
+
+.hh-foot {
+  text-align: center;
+  font-size: 0.85rem;
+  padding: 0.3rem 0 0.2rem;
+}
+
+@media (max-width: 760px) {
+  .hero-split {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding-top: 2rem;
+  }
+
+  .hero-text .cta-row {
+    justify-content: center;
+  }
+
+  .preview-window {
+    max-width: 420px;
+    margin: 0 auto;
+    text-align: left;
+  }
+}
+
+/* ---------------- Avatares ---------------- */
+
+.avatar {
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-strong);
+  color: #fff;
+  font-weight: 700;
+  overflow: hidden;
+  flex-shrink: 0;
+  width: 2.6rem;
+  height: 2.6rem;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-sm {
+  width: 1.7rem;
+  height: 1.7rem;
+  font-size: 0.7rem;
+}
+
+.avatar-md {
+  width: 3.2rem;
+  height: 3.2rem;
+  font-size: 1.1rem;
+}
+
+.avatar-lg {
+  width: 5.5rem;
+  height: 5.5rem;
+  font-size: 1.8rem;
+}
+
+.nav-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--text) !important;
+}
+
+.avatar-edit {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+textarea.input {
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* ---------------- Perfil ---------------- */
+
+.profile-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.profile-summary {
+  text-align: center;
+}
+
+.profile-summary .avatar {
+  margin: 0 auto;
+}
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+.profile-stats .value {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.profile-stats .label {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+/* ---------------- Dashboard ---------------- */
+
+.dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.progress-panel {
+  margin-bottom: 1.25rem;
+}
+
+.progress-bar {
+  height: 12px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 0.75rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--success));
+  border-radius: 999px;
+  transition: width 0.35s ease;
+}
+
+.list-title {
+  font-size: 1.15rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+/* ---------------- Secciones de la home ---------------- */
+
+.pill {
+  display: inline-block;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.section {
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 1.6rem;
+  margin: 0 0 0.5rem;
+}
+
+.section-sub {
+  text-align: center;
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.feature-card h3 {
+  margin: 0.75rem 0 0.5rem;
+}
+
+.feature-card p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.feature-icon {
+  font-size: 2rem;
+}
+
+.steps {
+  display: grid;
+  gap: 1rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.step-num {
+  width: 2.6rem;
+  height: 2.6rem;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-strong);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.team-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.team-card .avatar {
+  margin: 0 auto;
+}
+
+.cta-band {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  margin-top: 2.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.cta-band h2 {
+  margin: 0 0 1.25rem;
+}
+
+.cta-band .cta-row {
+  justify-content: center;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 2rem 0 0.5rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.site-footer p {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Celular */
+@media (max-width: 560px) {
+  .container {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-text h1 {
+    font-size: 1.7rem;
+  }
+
+  .section {
+    padding: 2rem 0;
+  }
+
+  .section-title,
+  .cta-band h2 {
+    font-size: 1.35rem;
+  }
+
+  .cta-band {
+    padding: 2rem 1rem;
+  }
+
+  /* Stats compactas: se mantienen en fila pero más chicas */
+  .stat {
+    padding: 0.85rem 0.6rem;
+    text-align: center;
+  }
+
+  .stat .value {
+    font-size: 1.3rem;
+  }
+
+  .stat .label {
+    font-size: 0.75rem;
+  }
+
+  .stats {
+    gap: 0.6rem;
+  }
+
+  /* Header */
+  .site-header .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .brand {
+    font-size: 1rem;
+  }
+
+  .nav-links {
+    gap: 0.6rem;
+  }
+}
+
+/* Celular angosto */
+@media (max-width: 480px) {
+  /* En el nav mostramos solo el avatar (sin el nombre) para ahorrar espacio */
+  .nav-user > span:not(.avatar) {
+    display: none;
+  }
+
+  /* Tarjeta de hábito compacta */
+  .habit-card {
+    gap: 0.7rem;
+    padding: 0.8rem 0.7rem;
+  }
+
+  .habit-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1.3rem;
+  }
+
+  /* Círculos de los días un poco más chicos para que entren los 7 */
+  .day-mark {
+    width: 1.85rem;
+    height: 1.85rem;
+    font-size: 0.85rem;
+  }
+
+  .hc-week {
+    gap: 0.15rem;
+  }
+
+  /* El selector de íconos/colores del modal ocupa el ancho cómodo */
+  .picker button,
+  .swatch {
+    width: 2rem;
+    height: 2rem;
+  }
+}
