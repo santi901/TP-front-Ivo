@@ -525,6 +525,57 @@ button {
 .dot-y { background: #ffbd2e; }
 .dot-g { background: #28c93f; }
 
+/* Imagen de muestra estática (visitantes sin sesión) */
+.preview-static {
+  transform: rotateY(-8deg) rotateX(3deg);
+}
+
+.preview-habit {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+}
+
+.preview-week {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.25rem;
+  margin-top: 0.6rem;
+}
+
+.pday {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  flex: 1;
+}
+
+.pday-label {
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+.pday-mark {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.8rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: transparent;
+}
+
+.pday-mark.on {
+  background: var(--success);
+  border-color: var(--success);
+  color: #0f1117;
+  font-weight: 700;
+}
+
 .hh-empty {
   text-align: center;
   color: var(--muted);
@@ -552,6 +603,10 @@ button {
     max-width: 420px;
     margin: 0 auto;
     text-align: left;
+  }
+
+  .preview-static {
+    transform: none;
   }
 }
 
