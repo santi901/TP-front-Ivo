@@ -54,13 +54,15 @@ export default function HomeHabits() {
   const [logs, setLogs] = useState<HabitLog[]>([]);
 
   useEffect(() => {
-    if (getUser()) {
-      setMode('user');
-      setHabits(getHabits());
-      setLogs(getLogs());
-    } else {
-      setMode('guest');
-    }
+    getUser().then((u) => {
+      if (u) {
+        setMode('user');
+        setHabits(getHabits());
+        setLogs(getLogs());
+      } else {
+        setMode('guest');
+      }
+    });
   }, []);
 
   function handleToggle(habitId: string, date: string) {

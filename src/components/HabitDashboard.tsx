@@ -41,14 +41,15 @@ export default function HabitDashboard() {
   }
 
   useEffect(() => {
-    const u = getUser();
-    if (!u) {
-      window.location.href = '/login';
-      return;
-    }
-    setUser(u);
-    refresh();
-    setLoaded(true);
+    getUser().then((u) => {
+      if (!u) {
+        window.location.href = '/login';
+        return;
+      }
+      setUser(u);
+      refresh();
+      setLoaded(true);
+    });
   }, []);
 
   function handleToggle(habitId: string, date: string) {

@@ -11,7 +11,7 @@ export default function AuthForm({ mode }: Props) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError('');
 
@@ -20,13 +20,16 @@ export default function AuthForm({ mode }: Props) {
       return;
     }
 
-    // NOTA: autenticación simulada (mock local). Reemplazar por Supabase Auth.
-    if (mode === 'register') {
-      register(name, email, password);
-    } else {
-      login(email, password);
+    try {
+      if (mode === 'register') {
+        await register(name, email, password);
+      } else {
+        await login(email, password);
+      }
+      window.location.href = '/dashboard';
+    } catch (err: any) {
+      setError(err?.message ?? 'No se pudo completar la operación. Intentá de nuevo.');
     }
-    window.location.href = '/dashboard';
   }
 
   return (

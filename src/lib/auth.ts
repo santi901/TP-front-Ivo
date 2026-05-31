@@ -1,61 +1,81 @@
 // ============================================================================
-// SESIÓN MOCK — TEMPORAL (solo para el flujo de UI del front)
+// AUTENTICACIÓN REAL — Supabase Auth
 // ----------------------------------------------------------------------------
-// Simula login/registro/logout guardando un usuario en localStorage. NO valida
-// credenciales reales. Cuando Supabase Auth esté listo, se reemplaza el cuerpo
-// de estas funciones por supabase.auth.signInWithPassword / signUp / signOut.
+// Reemplaza la sesión mock con localStorage por Supabase Auth real.
+// Mantiene la API que usan los componentes del front (getUser, updateUser,
+// isLoggedIn, login, register, logout) pero ahora todas son ASÍNCRONAS porque
+// hablan con el backend. El nombre, avatar y bio del usuario se guardan en
+// user_metadata de Supabase.
 // ============================================================================
 
+import { supabase } from './supabase';
 import type { User } from './types';
 
-const SESSION_KEY = 'ht_session';
-
-function isBrowser(): boolean {
-  return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
-}
-
-export function getUser(): User | null {
-  if (!isBrowser()) return null;
-  try {
-    const raw = localStorage.getItem(SESSION_KEY);
-    return raw ? (JSON.parse(raw) as User) : null;
-  } catch {
-    return null;
-  }
-}
-
-export function isLoggedIn(): boolean {
-  return getUser() !== null;
-}
-
-/** "Inicia sesión" guardando un usuario derivado del email (mock). */
-export function login(email: string, _password: string): User {
-  const name = email.split('@')[0] || 'Usuario';
-  const user: User = { id: `local_${name}`, name, email, createdAt: new Date().toISOString() };
-  if (isBrowser()) localStorage.setItem(SESSION_KEY, JSON.stringify(user));
-  return user;
-}
-
-/** "Registra" un usuario (mock) y deja la sesión iniciada. */
-export function register(name: string, email: string, _password: string): User {
-  const user: User = {
-    id: `local_${name}`,
-    name: name.trim(),
-    email,
-    createdAt: new Date().toISOString(),
+/** Normaliza el usuario de Supabase al tipo `User` que usa el front. */
+function mapUser(sbUser: any | null): User | null {
+  if (!sbUser) return null;
+  const meta = sbUser.user_metadata ?? {};
+  return {
+    id: sbUser.id,
+    name: meta.nombre ?? meta.name ?? (sbUser.email?.split('@')[0] ?? 'Usuario'),
+    email: sbUser.email ?? '',
+    avatar: meta.avatar ?? '',
+    bio: meta.bio ?? '',
+    createdAt: sbUser.created_at,
   };
-  if (isBrowser()) localStorage.setItem(SESSION_KEY, JSON.stringify(user));
-  return user;
 }
 
-export function updateUser(patch: Partial<Pick<User, 'name' | 'email' | 'avatar' | 'bio'>>): User | null {
-  const current = getUser();
-  if (!current) return null;
-  const updated = { ...current, ...patch };
-  if (isBrowser()) localStorage.setItem(SESSION_KEY, JSON.stringify(updated));
-  return updated;
+/** Devuelve el usuario logueado (o null) leyendo la sesión de Supabase. */
+export async function getUser(): Promise<User | null> {
+  const { data } = await supabase.auth.getUser();
+  return mapUser(data.user);
 }
 
-export function logout(): void {
-  if (isBrowser()) localStorage.removeItem(SESSION_KEY);
+/** True si hay una sesión activa. */
+export async function isLoggedIn(): Promise<boolean> {
+  const { data } = await supabase.auth.getSession();
+  return data.session !== null;
+}
+
+/** Registra un usuario nuevo en Supabase y guarda su nombre en metadata. */
+export async function register(name: string, email: string, password: string): Promise<User | null> {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { nombre: name.trim() },
+    },
+  });
+  if (error) throw error;
+  return mapUser(data.user);
+}
+
+/** Inicia sesión con email y contraseña. */
+export async function login(email: string, password: string): Promise<User | null> {
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) throw error;
+  return mapUser(data.user);
+}
+
+/** Cierra la sesión actual. */
+export async function logout(): Promise<void> {
+  await supabase.auth.signOut();
+}
+
+/** Actualiza nombre / email / bio / avatar del usuario en Supabase. */
+export async function updateUser(
+  patch: Partial<Pick<User, 'name' | 'email' | 'avatar' | 'bio'>>,
+): Promise<User | null> {
+  const payload: { email?: string; data?: Record<string, unknown> } = {};
+  if (patch.email) payload.email = patch.email;
+
+  const data: Record<string, unknown> = {};
+  if (patch.name !== undefined) data.nombre = patch.name;
+  if (patch.bio !== undefined) data.bio = patch.bio;
+  if (patch.avatar !== undefined) data.avatar = patch.avatar;
+  if (Object.keys(data).length > 0) payload.data = data;
+
+  const { data: result, error } = await supabase.auth.updateUser(payload);
+  if (error) throw error;
+  return mapUser(result.user);
 }

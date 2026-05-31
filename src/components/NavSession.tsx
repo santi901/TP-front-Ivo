@@ -12,12 +12,14 @@ export default function NavSession() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setUser(getUser());
-    setReady(true);
+    getUser().then((u) => {
+      setUser(u);
+      setReady(true);
+    });
   }, []);
 
-  function handleLogout() {
-    logout();
+  async function handleLogout() {
+    await logout();
     window.location.href = '/';
   }
 

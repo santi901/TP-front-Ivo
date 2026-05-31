@@ -10,7 +10,7 @@ export default function HomeCta({ variant = 'hero' }: Props) {
   const [state, setState] = useState<'loading' | 'in' | 'out'>('loading');
 
   useEffect(() => {
-    setState(getUser() ? 'in' : 'out');
+    getUser().then((u) => setState(u ? 'in' : 'out'));
   }, []);
 
   // Reserva el espacio para evitar saltos de layout mientras lee la sesión.

@@ -26,23 +26,24 @@ export default function ProfileForm() {
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const user = getUser();
-    if (!user) {
-      window.location.href = '/login';
-      return;
-    }
-    setName(user.name);
-    setEmail(user.email);
-    setBio(user.bio ?? '');
-    setAvatar(user.avatar ?? '');
-    setCreatedAt(user.createdAt);
+    getUser().then((user) => {
+      if (!user) {
+        window.location.href = '/login';
+        return;
+      }
+      setName(user.name);
+      setEmail(user.email);
+      setBio(user.bio ?? '');
+      setAvatar(user.avatar ?? '');
+      setCreatedAt(user.createdAt);
 
-    const habits = getHabits();
-    const logs = getLogs();
-    const best = habits.reduce((max, h) => Math.max(max, currentStreak(h.id, logs)), 0);
-    setStats({ habits: habits.length, bestStreak: best, checkins: logs.length });
+      const habits = getHabits();
+      const logs = getLogs();
+      const best = habits.reduce((max, h) => Math.max(max, currentStreak(h.id, logs)), 0);
+      setStats({ habits: habits.length, bestStreak: best, checkins: logs.length });
 
-    setLoaded(true);
+      setLoaded(true);
+    });
   }, []);
 
   function handleFile(e: ChangeEvent<HTMLInputElement>) {
@@ -62,20 +63,24 @@ export default function ProfileForm() {
     reader.readAsDataURL(file);
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!name.trim()) {
       setError('El nombre no puede estar vacío.');
       return;
     }
     setError('');
-    updateUser({ name: name.trim(), email: email.trim(), bio: bio.trim(), avatar } as Partial<User>);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    try {
+      await updateUser({ name: name.trim(), email: email.trim(), bio: bio.trim(), avatar } as Partial<User>);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err: any) {
+      setError(err?.message ?? 'No se pudieron guardar los cambios.');
+    }
   }
 
-  function handleLogout() {
-    logout();
+  async function handleLogout() {
+    await logout();
     window.location.href = '/login';
   }
 
