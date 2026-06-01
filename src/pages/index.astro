@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HomeCta from '../components/HomeCta.tsx';
+import HomeHabits from '../components/HomeHabits.tsx';
+
+const features = [
+  { icon: '✅', title: 'Simple y rápido', desc: 'Marcá tus hábitos del día con un solo toque. Sin fricción.' },
+  { icon: '🔥', title: 'Rachas que motivan', desc: 'Mantené la cadena viva y mirá cuántos días seguidos llevás.' },
+  { icon: '📊', title: 'Tu progreso a la vista', desc: 'Estadísticas claras: hábitos, cumplidos hoy y tu mejor racha.' },
+  { icon: '☁️', title: 'En la nube', desc: 'Tus datos sincronizados para acceder desde cualquier lugar.' },
+];
+
+const steps = [
+  { n: 1, title: 'Creá tu cuenta', desc: 'Registrate en segundos y entrá a tu dashboard personal.' },
+  { n: 2, title: 'Agregá tus hábitos', desc: 'Elegí nombre, ícono y color para cada hábito que quieras sostener.' },
+  { n: 3, title: 'Marcá y sostené', desc: 'Cumplí cada día, hacé crecer tu racha y no rompas la cadena.' },
+];
+
+const team = [
+  { initials: 'S', name: 'Santi', role: 'Frontend — UI, componentes e integración' },
+  { initials: 'N', name: 'Nacho', role: 'Backend — base de datos y autenticación' },
+];
+---
+
+<Layout title="Habit Tracker — Construí mejores hábitos">
+  <!-- Hero -->
+  <section class="hero-split">
+    <div class="hero-text">
+      <span class="pill">🔥 Tu cadena de hábitos, un día a la vez</span>
+      <h1>Construí mejores hábitos, sin perder la racha</h1>
+      <p>
+        Habit Tracker te ayuda a crear rutinas que duran. Definí tus hábitos, marcalos cada
+        día y visualizá tu progreso con rachas y estadísticas. Pequeños pasos, grandes cambios.
+      </p>
+      <HomeCta variant="hero" client:load />
+    </div>
+
+    <!-- Mini-panel interactivo de hábitos -->
+    <div class="hero-preview">
+      <HomeHabits client:load />
+    </div>
+  </section>
+
+  <!-- Qué es / Features -->
+  <section class="section">
+    <h2 class="section-title">¿Qué es Habit Tracker?</h2>
+    <p class="section-sub">
+      Una app pensada para ayudarte a ser constante. En vez de listas que se olvidan,
+      te muestra tu progreso de forma visual para que mantener un hábito sea satisfactorio.
+    </p>
+    <div class="feature-grid">
+      {features.map((f) => (
+        <div class="feature-card">
+          <div class="feature-icon">{f.icon}</div>
+          <h3>{f.title}</h3>
+          <p class="muted">{f.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Cómo funciona -->
+  <section class="section">
+    <h2 class="section-title">¿Cómo funciona?</h2>
+    <div class="steps">
+      {steps.map((s) => (
+        <div class="step">
+          <div class="step-num">{s.n}</div>
+          <div>
+            <h3 style="margin: 0;">{s.title}</h3>
+            <p class="muted" style="margin: 0.25rem 0 0;">{s.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Quiénes somos -->
+  <section class="section">
+    <h2 class="section-title">Quiénes somos</h2>
+    <p class="section-sub">
+      Somos un equipo de dos estudiantes que desarrollamos esta app como proyecto de una
+      aplicación web serverless, con foco en buenas prácticas y trabajo colaborativo.
+    </p>
+    <div class="team-grid">
+      {team.map((m) => (
+        <div class="team-card">
+          <div class="avatar avatar-lg"><span>{m.initials}</span></div>
+          <h3 style="margin: 0.5rem 0 0;">{m.name}</h3>
+          <p class="muted" style="margin: 0.25rem 0 0;">{m.role}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="cta-band">
+    <h2>¿Listo para empezar tu primera racha?</h2>
+    <HomeCta variant="band" client:load />
+  </section>
+
+  <footer class="site-footer">
+    <p class="muted">🔥 Habit Tracker · Trabajo Práctico — Aplicación Serverless · {new Date().getFullYear()}</p>
+  </footer>
+</Layout>
