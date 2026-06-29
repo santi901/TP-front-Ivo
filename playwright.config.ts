@@ -19,9 +19,11 @@ export default defineConfig({
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
   ],
-  // Antes de correr los tests, Playwright arranca la app y espera a que responda.
+  // Antes de correr los tests, Playwright buildea la app y levanta el preview.
+  // Construir acá hace que `npm run test:e2e` sea autónomo (no depende de un
+  // build previo), tanto en local como en CI.
   webServer: {
-    command: 'npm run preview -- --port ' + PORT,
+    command: `npm run build && npm run preview -- --port ${PORT}`,
     url: BASE_URL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

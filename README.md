@@ -3,6 +3,12 @@
 Aplicación web para seguir hábitos diarios: el usuario crea sus hábitos, los marca día a
 día y visualiza su progreso (rachas, calendario). Trabajo Práctico — Aplicación Serverless.
 
+🌐 **Producción:** https://TODO-completar-url.vercel.app
+<!-- Reemplazar por la URL real de Vercel cuando esté desplegado. -->
+
+📋 La documentación de calidad (estrategia de tests, pipeline, decisiones) está en
+[`CALIDAD.md`](./CALIDAD.md).
+
 ## Stack tecnológico
 
 | Capa | Tecnología | Por qué |
@@ -57,6 +63,10 @@ Ambas tablas con políticas RLS para que cada usuario acceda solo a sus propios 
 | `npm run dev` | Servidor de desarrollo |
 | `npm run build` | Build de producción en `./dist/` |
 | `npm run preview` | Previsualiza el build localmente |
+| `npm run lint` | Linter (ESLint) + chequeo de tipos (`astro check`) |
+| `npm run test` | Tests unitarios (Vitest) |
+| `npm run test:coverage` | Tests unitarios con reporte de cobertura |
+| `npm run test:e2e` | Tests end-to-end (Playwright) |
 
 ## Estructura del proyecto
 
@@ -77,3 +87,46 @@ src/
 | `Nacho-Back` | Nacho | Backend (modelado de datos, Auth y RLS en Supabase) |
 | `Develop` | — | Integración de features |
 | `main` | — | Versión funcional desplegada |
+
+## Flujo de trabajo (Git + GitHub)
+
+Ningún cambio se mergea directo a `main` ni a `Develop`: todo pasa por una rama
+propia y un Pull Request revisado por el otro integrante.
+
+**Convención de nombres de ramas:**
+
+| Prefijo | Para qué | Ejemplo |
+|---------|----------|---------|
+| `feature/` | Nueva funcionalidad o mejora | `feature/grafico-rachas` |
+| `fix/` | Corrección de un bug | `fix/racha-cambio-de-mes` |
+| `docs/` | Solo documentación | `docs/calidad` |
+| `chore/` | Tooling, config, mantenimiento | `chore/limpiar-node-modules` |
+
+**Pasos para cada cambio:**
+
+1. Crear un **issue** describiendo la tarea (título claro, descripción y asignado).
+2. Crear una rama desde `Develop` siguiendo la convención de arriba.
+3. Trabajar y commitear con mensajes descriptivos.
+4. Abrir un **Pull Request** hacia `Develop` que referencie el issue (`Closes #N`).
+   Se completa la plantilla de PR con su checklist.
+5. El otro integrante **revisa** el PR (al menos un comentario concreto) y aprueba.
+6. Se mergea solo si el **pipeline de CI está en verde**.
+
+## CI/CD
+
+En cada push o PR a `main`/`Develop`, GitHub Actions corre el pipeline
+(`.github/workflows/ci.yml`): **lint → tests unitarios → tests E2E → build**.
+El **deploy a producción (Vercel)** solo ocurre en pushes a `main` y únicamente si
+todo el pipeline pasó. El detalle de cada paso y las decisiones de diseño están en
+[`CALIDAD.md`](./CALIDAD.md).
+
+### Secrets necesarios (configurar en GitHub → Settings → Secrets and variables → Actions)
+
+Para que el deploy automático funcione hay que cargar tres secrets, que se obtienen
+del proyecto en Vercel:
+
+| Secret | De dónde sale |
+|--------|---------------|
+| `VERCEL_TOKEN` | Vercel → Account Settings → Tokens → *Create Token* |
+| `VERCEL_ORG_ID` | Archivo `.vercel/project.json` tras correr `vercel link` (campo `orgId`) |
+| `VERCEL_PROJECT_ID` | Mismo archivo `.vercel/project.json` (campo `projectId`) |
