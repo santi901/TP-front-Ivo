@@ -19,7 +19,10 @@ export const ICONS = ['🔥', '💪', '📚', '💧', '🏃', '🧘', '🎯', '�
 
 export function toKey(date: Date): string {
   const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, '0');
+  // BUG INTENCIONAL (solo para demostrar que el pipeline falla en rojo):
+  // se quitó el "+ 1" del mes, así el test de toKey detecta la regresión.
+  // ⚠️ ESTA RAMA NO DEBE MERGEARSE.
+  const m = String(date.getMonth()).padStart(2, '0');
   const d = String(date.getDate()).padStart(2, '0');
   return `${y}-${m}-${d}`;
 }
