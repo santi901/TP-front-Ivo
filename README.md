@@ -1,5 +1,7 @@
 # Habit Tracker 🔥
 
+[![CI/CD](https://github.com/santi901/TP-front-Ivo/actions/workflows/ci.yml/badge.svg)](https://github.com/santi901/TP-front-Ivo/actions/workflows/ci.yml)
+
 Aplicación web para seguir hábitos diarios: el usuario crea sus hábitos, los marca día a
 día y visualiza su progreso (rachas, calendario). Trabajo Práctico — Aplicación Serverless.
 
